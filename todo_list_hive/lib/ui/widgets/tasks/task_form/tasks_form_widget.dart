@@ -5,8 +5,6 @@ import 'tasks_form_widget_model.dart';
 
 class TasksFormWidget extends StatefulWidget {
   final TaskWidgetConfiguration configuration;
-
-  // final int groupKey;
   const TasksFormWidget({super.key, required this.configuration});
 
   @override
@@ -14,8 +12,7 @@ class TasksFormWidget extends StatefulWidget {
 }
 
 class _TasksFormWidgetState extends State<TasksFormWidget> {
-  late final TasksFormWidgetModel
-      _model; //! модель! которая 100% будет и  обьявим позже так как groupKey будет позже
+  late final TasksFormWidgetModel _model;
 
   @override
   void initState() {
@@ -46,7 +43,7 @@ class _TasksFormWidgetBody extends StatelessWidget {
         backgroundColor: Colors.blue,
         title: const Text('Новая задача'),
       ),
-      floatingActionButton: model?.isProsible == true ? actionButton : null,
+      floatingActionButton: model?.isPosible == true ? actionButton : null,
       body: const Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),

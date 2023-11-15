@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import '../../../../domain/data_provider/hive_box_manager.dart';
 import '../../../../domain/entity/tasks.dart';
 import '../../group/group_widget_model.dart';
@@ -10,19 +9,16 @@ class TasksFormWidgetModel extends ChangeNotifier {
   final TaskWidgetConfiguration configuration;
 
 //--------------------------------------
-  bool get isProsible =>
-      _taskText.trim().isNotEmpty; //непустой true - пустой false
+  bool get isPosible => _taskText.trim().isNotEmpty;
 
   set taskText(String value) {
-    //сюда приходит value из TextField
-    //! Сеттер чтобы показывать кнопку когда снова начинаем вводить текст
     final bool isTaskTextEmty = _taskText
         .trim()
-        .isEmpty; //!запоминаем показания старого _taskText(предыдущей буквы)
+        .isEmpty; //запоминаем показания старого _taskText(предыдущей буквы)
     _taskText = value; //передаем value дальше в _groupName и потом в бокс
 
     if (value.trim().isEmpty != isTaskTextEmty) {
-      //! сравниваем новую с предыдущей буквой - если чтото не пустое - то условие выполнено
+      // сравниваем новую с предыдущей буквой - если чтото не пустое - то условие выполнено
       notifyListeners(); //уведомляем
     }
   }
@@ -72,12 +68,6 @@ class TasksFormWidgetModelProvider
     final widget = context
         .getElementForInheritedWidgetOfExactType<TasksFormWidgetModelProvider>()
         ?.widget;
-    return widget is TasksFormWidgetModelProvider
-        ? widget
-        : null; //                   .notifier : null;
+    return widget is TasksFormWidgetModelProvider ? widget : null;
   }
-
-  // @override
-  //bool updateShouldNotify(TasksFormWidgetModelProvider oldWidget) {
-  //  return notifier != oldWidget.notifier;
 }

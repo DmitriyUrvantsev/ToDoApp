@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'group_form_widget_model.dart';
 
 class GroupFormWidget extends StatefulWidget {
@@ -52,7 +51,7 @@ class _GroupNameWidget extends StatelessWidget {
 
     return TextField(
         autofocus: true,
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: 'Password',
           errorText: watch?.errorText,

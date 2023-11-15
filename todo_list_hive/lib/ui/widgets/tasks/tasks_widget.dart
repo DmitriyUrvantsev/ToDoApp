@@ -16,8 +16,7 @@ class TasksWidget extends StatefulWidget {
 }
 
 class _TasksWidgetState extends State<TasksWidget> {
-  late final TasksWidgetModel
-      _model; // модель! которая 100% будет и  обьявим позже так как groupKey будет позже
+  late final TasksWidgetModel _model;
 
   @override
   void initState() {

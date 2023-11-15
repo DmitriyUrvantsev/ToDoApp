@@ -13,9 +13,10 @@ class GroupFormWidgetModel extends ChangeNotifier {
       //если уже есть ошибка и начали набирать текст
       errorText = null;
       //убираем ошибку
-      notifyListeners(); //уведомляем
+      notifyListeners();
     }
-    _groupName = value; //передаем value дальше в _groupName и потом в бокс
+    _groupName = value;
+    //передаем value дальше в _groupName и потом в бокс
   }
 
   void saveGroup(context) async {
@@ -56,12 +57,6 @@ class GroupFormWidgetModelProvider
     final widget = context
         .getElementForInheritedWidgetOfExactType<GroupFormWidgetModelProvider>()
         ?.widget;
-    return widget is GroupFormWidgetModelProvider
-        ? widget
-        : null; //                   .notifier : null;
+    return widget is GroupFormWidgetModelProvider ? widget : null;
   }
-
-  // @override
-  //bool updateShouldNotify(GroupFormWidgetModelProvider oldWidget) {
-  //  return notifier != oldWidget.notifier;
 }

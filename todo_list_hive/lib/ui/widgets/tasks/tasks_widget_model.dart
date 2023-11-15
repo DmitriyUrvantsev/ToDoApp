@@ -32,7 +32,7 @@ class TasksWidgetModel extends ChangeNotifier {
   }
 
   Future<void> _loadTasks() async {
-    final box = await _tasksBox; // Ждем пока откроется группБокс
+    final box = await _tasksBox;
     _readTasks();
     _listenablebox = box.listenable();
     _listenablebox?.addListener(_readTasks);
@@ -40,8 +40,7 @@ class TasksWidgetModel extends ChangeNotifier {
   }
 
   void _setup() {
-    _tasksBox = BoxManager.instance
-        .openTaskBox(configuration.groupKey); //открываем Бокс групп
+    _tasksBox = BoxManager.instance.openTaskBox(configuration.groupKey);
     _readTasks();
     _loadTasks();
   }

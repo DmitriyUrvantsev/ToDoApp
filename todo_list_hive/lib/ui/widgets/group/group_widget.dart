@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'group_widget_model.dart';
-
-//import 'package:hive/hive.dart';
-//import 'package:hive_flutter/hive_flutter.dart';
-
-//import 'group_widget_model.dart';
 
 class GroupWidget extends StatefulWidget {
   const GroupWidget({super.key});
@@ -22,12 +16,6 @@ class _GroupWidgetState extends State<GroupWidget> {
     return GroupWidgetModelProvider(
         model: _model, child: const GroupWidgetBody());
   }
-
-  //! @override  - лучше делать через контроль закрытия счетчиком
-  //! void dispose() async {
-  //!   await _model.dispose();
-  //!   super.dispose();
-  //! }
 }
 
 class GroupWidgetBody extends StatelessWidget {
@@ -38,7 +26,6 @@ class GroupWidgetBody extends StatelessWidget {
     final read = GroupWidgetModelProvider.read(context)?.model;
     final watch = GroupWidgetModelProvider.watch(context)?.model;
 
-    // final groupList = GroupWidgetModelProvider.watch(context)?.groupList;
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Группы')),
@@ -48,7 +35,7 @@ class GroupWidgetBody extends StatelessWidget {
           onPressed: () => read?.showNewForm(context),
           child: const Icon(Icons.add)),
       body: ListView.separated(
-        itemCount: watch?.group.length ?? 1, //groupList?.length ?? 1,
+        itemCount: watch?.group.length ?? 1,
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
           return GroupItemWidget(listIndex: index);
@@ -67,7 +54,6 @@ class GroupItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final watch = GroupWidgetModelProvider.watch(context)?.model;
     final read = GroupWidgetModelProvider.read(context)?.model;
 
     return Slidable(
@@ -77,9 +63,7 @@ class GroupItemWidget extends StatelessWidget {
         children: [
           SlidableAction(
             spacing: 2,
-            onPressed: (context) =>
-                read?.deleteGroup(listIndex), //!!!!!!!!!!!!!!
-            //onPressed: () => {},//(listIndex) => read?.deleteGroup(listIndex as int),
+            onPressed: (context) => read?.deleteGroup(listIndex),
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,

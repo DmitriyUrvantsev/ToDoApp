@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../entity/group.dart';
 import '../entity/tasks.dart';
 
@@ -29,8 +28,7 @@ class BoxManager {
       return;
     }
     if (Hive.isBoxOpen(box.name)) {
-      // если открыт
-       int count = _boxCounter[box.name] ?? 1; // если null, тогда 1
+      int count = _boxCounter[box.name] ?? 1;
       count -= 1;
       _boxCounter[box.name] = count;
       if (count > 0) {
@@ -38,7 +36,7 @@ class BoxManager {
       }
       //! если 0, то значит открыл столько же сколько и закрыл  - нужно закрывать
 
-      _boxCounter.remove(box.name); //удалить int по name
+      _boxCounter.remove(box.name);
       await box.compact();
       await box.close();
     }
@@ -48,7 +46,7 @@ class BoxManager {
   Future<Box<T>> _openBox<T>(
       String name, int typeID, TypeAdapter<T> adapter) async {
     if (Hive.isBoxOpen(name)) {
-      final int count = _boxCounter[name] ?? 1; // если null, тогда 1
+      final int count = _boxCounter[name] ?? 1;
       _boxCounter[name] = count + 1;
       return Hive.box(name);
     } else {

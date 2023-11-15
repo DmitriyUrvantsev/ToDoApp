@@ -18,9 +18,7 @@ class MainNavigation {
   final routes = <String, Widget Function(BuildContext)>{
     MainNavigationRoutsName.group: (context) => const GroupWidget(),
     MainNavigationRoutsName.groupNewGroup: (context) => const GroupFormWidget(),
-    // MainNavigationRoutsName.groupTasks: (context) => const TasksWidget(groupKey: null,),
     //! groupKey здесь мы не можем передать? поэтому см.: onGenerateRoutes наша функция ниже
-    //MainNavigationRoutsName.groupNewTasks: (context) => const TasksFormWidget(),
   };
 
 //----------------наша функция где можно передать arg ---------------------------------
@@ -30,8 +28,7 @@ class MainNavigation {
     switch (settings.name) {
       //будем проверять, что это за name
 
-      case MainNavigationRoutsName
-            .tasks: // будем возвращать маршруты, см урок 59
+      case MainNavigationRoutsName.tasks: // будем возвращать маршруты
         final TaskWidgetConfiguration configuration =
             settings.arguments as TaskWidgetConfiguration;
         return MaterialPageRoute(

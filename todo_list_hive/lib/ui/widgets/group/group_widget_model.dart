@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list_hive_refactoring/domain/data_provider/hive_box_manager.dart';
-
 import '../../../domain/entity/group.dart';
 import '../../navigation/main_navigation.dart';
 
@@ -24,7 +23,7 @@ class GroupWidgetModel extends ChangeNotifier {
   //Не хотелось бы чтобы обращение к боксу было до его первоначальной инициализации
   //Везде где нужно будет поработать с boxом нужно будет ждать выполнения одной и той же Фичи
 
-  List<Group> _groups = <Group>[]; // типа была var
+  List<Group> _groups = <Group>[];
   List<Group> get group => _groups.toList();
 
   ValueListenable<Object>? _listenablebox;
@@ -38,9 +37,6 @@ class GroupWidgetModel extends ChangeNotifier {
   }
 
   Future<void> showTasks(BuildContext context, groupIndex) async {
-    // Navigator.of(context).pushNamed('/group/tasks', arguments: groupIndex);  ----  НЕПРАВИЛЬНО!!!
-    //! я хотел передать индекс группы который d ListView, а нужно передавать ключ группы в который в box Hive( по нашей группе[index])
-
     final groupKey = (await _groupBox).keyAt(groupIndex)
         as int; //! это ключ НАШЕЙ группы в боксе
     final groupName = group[groupIndex].nameGroup;
@@ -48,14 +44,15 @@ class GroupWidgetModel extends ChangeNotifier {
     final configuration =
         TaskWidgetConfiguration(groupKey: groupKey, groupName: groupName);
 
-    unawaited(//типа не ждем
+    unawaited(
+
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushNamed(MainNavigationRoutsName.tasks,
             arguments: configuration));
   }
+
 //-----------------------------------------------------
   Future<void> _readGroup() async {
-    //final box = await _groupBox; //!типа можно заменить на: (await _groupBox)
     _groups = (await _groupBox).values.toList();
     notifyListeners();
   }
@@ -63,7 +60,6 @@ class GroupWidgetModel extends ChangeNotifier {
 //--------------------------------------------------------
 
   Future<void> _loadGroups() async {
-    //final box = await _groupBox; // Ждем пока откроется группБокс //!типа можно заменить на: (await _groupBox)
     _listenablebox = (await _groupBox).listenable(); //это прослушиваемый бокс
     _listenablebox?.addListener(_readGroup); //начинаем наблюдать
   }
@@ -71,11 +67,10 @@ class GroupWidgetModel extends ChangeNotifier {
   void _setup() async {
     _groupBox = BoxManager.instance.openGroupBox();
     _readGroup();
-    //-------Future<void>
-    _loadGroups();
-    //await BoxManager.instance.closeBox(_groupBox);
 
+    _loadGroups();
   }
+
 //-------------------------------------------------------------
   Future<void> deleteGroup(int groupIndex) async {
     final groupKey = (await _groupBox).keyAt(groupIndex) as int;
@@ -87,12 +82,12 @@ class GroupWidgetModel extends ChangeNotifier {
     ////!!!!!!!!!!!!!!!!!!!! AT AT AT AT!!!!!!!!!
   }
 
-   @override 
-   Future<void> dispose() async {
-     _listenablebox?.removeListener(_readGroup); //снимаем наблюдение
-     await BoxManager.instance.closeBox((await _groupBox)); //закрываем бокс
-     super.dispose();
-   }
+  @override
+  Future<void> dispose() async {
+    _listenablebox?.removeListener(_readGroup); //снимаем наблюдение
+    await BoxManager.instance.closeBox((await _groupBox)); //закрываем бокс
+    super.dispose();
+  }
 }
 
 //----------------------------------------
@@ -117,12 +112,6 @@ class GroupWidgetModelProvider extends InheritedNotifier<GroupWidgetModel> {
     final widget = context
         .getElementForInheritedWidgetOfExactType<GroupWidgetModelProvider>()
         ?.widget;
-    return widget is GroupWidgetModelProvider
-        ? widget
-        : null; //                   .notifier : null;
+    return widget is GroupWidgetModelProvider ? widget : null;
   }
-
-  // @override
-  //bool updateShouldNotify(GroupWidgetModelProvider oldWidget) {
-  //  return notifier != oldWidget.notifier;
 }
